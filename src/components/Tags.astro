@@ -1,0 +1,39 @@
+---
+import { captialize } from '../utils';
+const { tags } = Astro.props;
+
+interface Props {
+  tags: string[];
+}
+---
+
+<div class="flex flex-wrap gap-2">
+   <span
+    class="card__content"
+  >
+    {tags.map((tag: string, index: number) => (
+      <>
+        {index > 0 && ", "}
+        <a class="tags" href={"/articles/tag/" + tag}>#{captialize(tag)}</a>
+      </>
+    ))}
+  </span>
+</div>
+
+<style is:global>
+
+  .tags{
+      font-family:'Plus Jakarta Sans', 'Arial', 'sans-serif';
+      color: #006241;
+    }
+    .card__content{
+    font-size: 12px;
+    border: unset;
+    border-radius: 3rem;
+    background-color: #DFF9BA;
+    color: #1C0E40;
+    padding: 0.375rem 0.5rem;
+    transition: color .1s,background-color .1s;
+    }
+</style>
+ 

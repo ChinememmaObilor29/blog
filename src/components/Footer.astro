@@ -1,0 +1,64 @@
+---
+import  { getCollection } from "astro:content"
+import type { CollectionEntry } from "astro:content";
+import { captialize } from "../utils";
+import About from "./About.astro";
+
+const allBlogArticles: CollectionEntry<"blog">[] = 
+  await getCollection("blog")
+
+  const tags: string[] = allBlogArticles.flatMap((article: any) => article.data.tags)
+
+  const uniqueTags: string[] = [...new Set(tags)]
+---
+
+<main class="flex-1 bg-footer mx-auto ">
+<footer class="bg-footer  text-lightGreen">
+  <div class="container mx-auto mt-10 max-w-screen-xl px-8">
+    <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="mt-10">
+        <h3 class="text-xl !font-header font-semibold mb-4">About</h3>
+        <p class="text-lightGreen text-[16px]">
+          GreenLife's content is for informational and educational purposes only. Our website is not intended to be a substitute for professional medical advice, diagnosis, or treatment.
+        </p>
+      </div>
+      <div class="mt-10 ">
+        <h3 class="text-xl font-semibold !font-header mb-4">Categories</h3>
+        <ul class="text-lightGreen flex flex-wrap  flex-row gap-3 text-[16px]">
+          {uniqueTags.map(tag => (
+            <li class=" flex mb-2 text-xs">
+            <a href={'/articles/tag/' + tag}>#{captialize(tag)}</a>  
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="mt-10">
+        <h3 class="text-xl font-semibold !font-header mb-4">Contact</h3>
+        <ul class="text-lightGreen flex flex-wrap flex-row gap-4 text-[16px]">
+          <li class="mb-2">
+            <a href="#">Email</a>
+          </li>
+          <li class="mb-2">
+            <a href="#">Pinterest</a>
+          </li>
+          <li class="mb-2">
+            <a href="#">Facebook</a>
+          </li>
+          <li class="mb-2">
+            <a href="#">Instagram</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+</main>
+
+
+<style>
+  ul > li{
+    list-style: none;
+  }
+</style>
+
+
